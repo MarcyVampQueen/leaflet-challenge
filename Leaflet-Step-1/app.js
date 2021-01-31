@@ -13,7 +13,7 @@ L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     tileSize: 512,
     maxZoom: 18,
     zoomOffset: -1,
-    id: "mapbox/streets-v11",
+    id: "mapbox/light-v10",
     accessToken: API_KEY
 }).addTo(myMap);
 
@@ -68,17 +68,16 @@ function colorIt(depth) {
 }
 var legend = L.control({ position: 'bottomright' });
 
-legend.onAdd = function (myMap) {
+legend.onAdd = function () {
 
-    var div = L.DomUtil.create('div', 'info legend'),
-        grades = [0, 10, 40, 70, 100, 300, 500, 700],
-        labels = [];
+    var div = L.DomUtil.create('div', 'info legend')
+    var grades = [0, 10, 40, 70, 100, 300, 500, 700];
 
+    div.innerHTML += '<h4>Depth (km)</h4>';
     // loop through our density intervals and generate a label with a colored square for each interval
     for (var i = 0; i < grades.length; i++) {
-        div.innerHTML +=
-            '<i style="background:' + colorIt(grades[i] + 1) + '"></i> ' +
-            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+        div.innerHTML += '<i style="background:' + colorIt(grades[i] + 1) + '">' +
+            grades[i] + (grades[i + 1] ? ' &ndash; ' + grades[i + 1] + '</i><br>' : '+');
     }
 
     return div;
